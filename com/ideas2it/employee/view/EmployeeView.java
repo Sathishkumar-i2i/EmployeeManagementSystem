@@ -14,7 +14,7 @@ import com.ideas2it.employee.model.Employee;
 /**
  * This class is used for getting input from user
  * Like create, delete, update and display
- * @version 23/2/21
+ * @version 27/2/21
  * @author  Sathishkumar M
  */
 public class EmployeeView {
