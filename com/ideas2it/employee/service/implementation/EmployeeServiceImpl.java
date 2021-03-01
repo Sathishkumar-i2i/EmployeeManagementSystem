@@ -3,13 +3,11 @@
  */
 package com.ideas2it.employee.service.implementation;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date; 
+import java.sql.Date; 
 
 import com.ideas2it.employee.model.Employee;
 import com.ideas2it.employee.service.EmployeeService;
+import com.ideas2it.employee.dao.implementation.EmployeeDaoImpl;
 
 /**
  * This class is used for sent data to EmployeeDao 
@@ -17,7 +15,7 @@ import com.ideas2it.employee.service.EmployeeService;
  * @author  Sathishkumar M
  */
 public class EmployeeServiceImpl implements EmployeeService {
-    EmployeeDao employeeDao = new EmployeeDao();
+    EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
 
     /**
      * This Method is used for send created employee details to modal
@@ -33,10 +31,10 @@ public class EmployeeServiceImpl implements EmployeeService {
      *        Represent Employee personal PhoneNumber
      * @return true or false
      */
-    public int createEmployee(String name, String dob, String joinYear, 
-        long salary, long phoneNumber) throws ParseException {
-        return employeeDao.createEmployee(name, new SimpleDateFormat("dd/MM/yyyy").parse(dob),
-                new SimpleDateFormat("dd/MM/yyyy").parse(joinYear), salary, phoneNumber);
+    public int createEmployee(String name, Date dob, Date joinYear, 
+        long salary, long phoneNumber) {
+        return employeeDao.createEmployee(name, dob,
+                joinYear, salary, phoneNumber);
     }
    
     /**
@@ -59,10 +57,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      *        dob is used for update employee dob
      * @return true or false
      */
-    public boolean updateDob(String dob, Integer employeeId)
-            throws ParseException {
-        return employeeDao.updateDob(new SimpleDateFormat("dd/MM/yyyy").parse(dob),
-                 employeeId);
+    public boolean updateDob(Date dob, Integer employeeId) {
+        return employeeDao.updateDob(dob, employeeId);
     }
 
     /**
@@ -73,10 +69,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      *        joinYear is used for update employee joinYear 
      * @return true or false
      */
-    public boolean updateJoinYear(String joinYear, Integer employeeId) 
-            throws ParseException {
-        return employeeDao.updateJoinYear(new SimpleDateFormat("dd/MM/yyyy").
-                parse(joinYear), employeeId);
+    public boolean updateJoinYear(Date joinYear, Integer employeeId) {
+        return employeeDao.updateJoinYear(joinYear, employeeId);
     }
 
     /**
@@ -88,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return true or false
      */
     public boolean updateSalary(long salary, Integer employeeId) {
-        return employeeService.updateSalary(salary, employeeId);
+        return employeeDao.updateSalary(salary, employeeId);
     }
 
     /**

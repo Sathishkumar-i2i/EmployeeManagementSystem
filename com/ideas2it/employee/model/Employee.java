@@ -14,13 +14,13 @@ public class Employee {
     private long salary;
     private long phoneNumber;
    
-    public Employee(String name, Date dob, Date joinYear, long salary, long phoneNumber) {
+  /*public Employee(String name, Date dob, Date joinYear, long salary, long phoneNumber) {
         this.name = name;
         this.dob = dob;
         this.joinYear = joinYear;
         this.salary = salary;
         this.phoneNumber = phoneNumber;
-    }
+    }*/
 
     public String getName() {
         return name;

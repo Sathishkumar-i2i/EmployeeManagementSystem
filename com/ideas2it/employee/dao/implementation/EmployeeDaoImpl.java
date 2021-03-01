@@ -6,6 +6,8 @@ package com.ideas2it.employee.dao.implementation;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.*;
+import java.lang.*;
 
 import com.ideas2it.employee.dao.EmployeeDao; 
 import com.ideas2it.employee.model.Employee;
@@ -15,7 +17,7 @@ import com.ideas2it.employee.model.Employee;
  * @version 27/2/21
  * @author  Sathishkumar M
  */
-public EmployeeDaoImpl implements EmployeeDao {
+public class EmployeeDaoImpl implements EmployeeDao {
 
     /**
      * This method is used for connecting database using
@@ -51,22 +53,20 @@ public EmployeeDaoImpl implements EmployeeDao {
      */
     public int createEmployee(String name, Date dob, Date joinYear, 
         long salary, long phoneNumber) { 
-        int status = 0;
-        try{  
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "insert into employeedetails(name, dob, joinYear,
-                 salary, phoneNumber) values(?, ?, ?, ?, ?)");  
+                "insert into employeedetails(name, dob, joinYear, salary, phoneNumber) values(?, ?, ?, ?, ?)");  
             preparedStatement.setString(2, name);  
             preparedStatement.setDate(3, dob);  
             preparedStatement.setDate(4, joinYear);  
             preparedStatement.setLong(5, salary);  
             preparedStatement.setLong(6, phoneNumber);  
-            status = preparedStatement.executeUpdate();
-            return status; 
+            preparedStatement.executeUpdate();
+            return 1; 
             connection.close(); 
         } catch(Exception e) {
-            return status;
+            return 0;
         }  
     }
 
@@ -79,17 +79,16 @@ public EmployeeDaoImpl implements EmployeeDao {
      * @return true or false
      */
     public boolean updateName(String name, Integer employeeId) {
-        boolean status = false;
-        try{  
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "update from employeedetails where id = employeeId");  
             preparedStatement.setString(2, name);    
-            status = preparedStatement.executeUpdate();
-            return status;
+            preparedStatement.executeUpdate();
+            return true;
             connection.close();  
         } catch(Exception e) {
-            return status;
+            return false;
         } 
 
     }
@@ -103,17 +102,16 @@ public EmployeeDaoImpl implements EmployeeDao {
      * @return true or false
      */
     public boolean updateDob(Date dob, Integer employeeId) {
-        boolean status = false;
-        try{  
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "update from employeedetails where id = employeeId");  
             preparedStatement.setDate(3, dob);    
-            status = preparedStatement.executeUpdate();
-            return status;
+            preparedStatement.executeUpdate();
+            return true;
             connection.close();  
         } catch(Exception e) {
-            return status;
+            return false;
         }
 
     }
@@ -127,17 +125,16 @@ public EmployeeDaoImpl implements EmployeeDao {
      * @return true or false
      */
     public boolean updateJoinYear(Date joinYear, Integer employeeId) {
-        boolean status = false;
-        try{  
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "update from employeedetails where id = employeeId");  
             preparedStatement.setDate(4, joinYear);    
-            status = preparedStatement.executeUpdate();
-            return status;
+            preparedStatement.executeUpdate();
+            return true;
             connection.close();  
         } catch(Exception e) {
-            return status;
+            return false;
         }  
     }
   
@@ -150,17 +147,16 @@ public EmployeeDaoImpl implements EmployeeDao {
      * @return true or false
      */
     public boolean updateSalary(long salary, Integer employeeId) {
-        boolean status = false;
-        try{  
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "update from employeedetails where id = employeeId");  
-            preparedStatement.setLong(5, phoneNumber);    
-            status = preparedStatement.executeUpdate();
-            return status;
+            preparedStatement.setLong(5, salary);    
+            preparedStatement.executeUpdate();
+            return true;
             connection.close();  
         } catch(Exception e) {
-            return status;
+            return false;
         } 
     }
  
@@ -173,17 +169,16 @@ public EmployeeDaoImpl implements EmployeeDao {
      * @return true or false
      */    
     public boolean updatePhoneNumber(long phoneNumber, Integer employeeId) {
-        boolean status = false;
         try{  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "update from employeedetails where id = employeeId");  
             preparedStatement.setLong(6, phoneNumber);    
             status = preparedStatement.executeUpdate();
-            return status; 
+            return true; 
             connection.close(); 
         } catch(Exception e) {
-            return status;
+            return false;
         }
     }
 
@@ -194,17 +189,18 @@ public EmployeeDaoImpl implements EmployeeDao {
      * @return true or false
      */
     public boolean deleteEmployee(Integer employeeId) {
-        boolean status = false;
-        try{  
+        Integer intobject = new Integer(employeeId);
+        int employeeid = intobject.intValue();
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "delete from employeedetails where id = ?");  
-            preparedStatement.setString(1, employeeId);    
-            status = preparedStatement.executeUpdate();
-            return status;
+            preparedStatement.setString(1, employeeid);    
+            preparedStatement.executeUpdate();
+            return true;
             connection.close();  
         } catch(Exception e) {
-            return status;
+            return false;
         }
     }
 
@@ -217,13 +213,13 @@ public EmployeeDaoImpl implements EmployeeDao {
      */
     public Employee retrieveEmployee(Integer employeeId) {
         Employee employee = null;  
-        try{  
+        try {  
             Connection connection = getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement
                 ("select * from employeedetails where id = employeeId");  
             preparedStatement.setInt(1, employeeId);  
             ResultSet resultSet = preparedStatement.executeQuery();  
-            while(rs.next()) {  
+            while(resultSet.next()) {  
                 employee = new Employee();    
                 employee.setName(resultSet.getString("name"));  
                 employee.setDob(resultSet.getData("dob"));  

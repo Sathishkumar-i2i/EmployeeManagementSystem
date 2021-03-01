@@ -3,15 +3,9 @@
  */
 package com.ideas2it.employee.dao;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Date;
 
 import com.ideas2it.employee.model.Employee;
-import com.ideas2it.employee.service.implementation.EmployeeServiceImpl;
 
 /**
  * This class is used for sent input to Employee 

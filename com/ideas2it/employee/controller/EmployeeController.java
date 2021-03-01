@@ -3,11 +3,10 @@
  */
 package com.ideas2it.employee.controller;
  
-import java.text.ParseException;
-import java.util.Date;
+import java.sql.Date;
 
 import com.ideas2it.employee.model.Employee;
-import com.ideas2it.employee.service.EmployeeService;
+import com.ideas2it.employee.service.implementation.EmployeeServiceImpl;
 
 /**
  * This class is used for control the flow of data to service.
@@ -15,7 +14,7 @@ import com.ideas2it.employee.service.EmployeeService;
  * @author  Sathishkumar M
  */
 public class EmployeeController {   
-    EmployeeService employeeService = new EmployeeService();
+    EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
    
     /**
      * This method is used for sending details to service;
@@ -31,8 +30,8 @@ public class EmployeeController {
      *        Represent Employee personal PhoneNumber
      * @return true or false
      */
-    public int createEmployee(String name, String dob, String joinYear, 
-        long salary, long phoneNumber) throws ParseException {
+    public int createEmployee(String name, Date dob, Date joinYear, 
+        long salary, long phoneNumber) {
         return employeeService.createEmployee(name, dob, joinYear, salary, phoneNumber);
     }
     
@@ -56,8 +55,7 @@ public class EmployeeController {
      *        dob is used for update employee dob
      * @return true or false
      */
-    public boolean updateDob(String dob, Integer employeeId)
-            throws ParseException {
+    public boolean updateDob(Date dob, Integer employeeId) {
         return employeeService.updateDob(dob, employeeId);
     }
 
@@ -69,8 +67,7 @@ public class EmployeeController {
      *        joinYear is used for update employee joinYear
      * @return true or false
      */
-    public boolean updateJoinYear(String joinYear, Integer employeeId) 
-            throws ParseException {
+    public boolean updateJoinYear(Date joinYear, Integer employeeId) {
         return employeeService.updateJoinYear(joinYear, employeeId);
     }
 

@@ -5,7 +5,7 @@
 package com.ideas2it.employee.view;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Scanner;
 
 import com.ideas2it.employee.controller.EmployeeController;
@@ -69,10 +69,10 @@ public class EmployeeView {
         String name = scanner.nextLine();
         System.out.println("Enter employee Dob" 
                            + "\nExample(DD/MM/YYYY)");
-        String dob = scanner.nextLine();
+        Date dob = Date.valueOf(scanner.nextLine());
         System.out.println("Enter employee JoinYear"
                            + "\nExample(DD/MM/YYYY)");
-        String joinYear = scanner.nextLine();
+        Date joinYear = Date.valueOf(scanner.nextLine());
         System.out.println("Enter employee Salary");
         long salary = scanner.nextLong();
         System.out.println("Enter employee PhoneNumer");
@@ -109,13 +109,13 @@ public class EmployeeView {
                 case 2:
                     System.out.println("Enter the Dob: " 
                             + "\nExample(DD/MM/YYYY)");
-                    String dob = scanner.nextLine();
+                    Date dob = Date.valueOf(scanner.nextLine());
                     employeeController.updateDob(dob, employeeId);
                     break;
                 case 3:
                     System.out.println("\nEnter the JoinYear: "
                             + "\nExample(DD/MM/YYYY)");
-                    String joinYear = scanner.nextLine();
+                    Date joinYear = Date.valueOf(scanner.nextLine());
                     employeeController.updateJoinYear(joinYear, employeeId);
                     break;
                 case 4:   
