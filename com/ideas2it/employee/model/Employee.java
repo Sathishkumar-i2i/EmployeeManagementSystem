@@ -1,6 +1,6 @@
 package com.ideas2it.employee.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * This class is used for stored employee details

@@ -4,13 +4,14 @@
 package com.ideas2it.employee.controller;
  
 import java.sql.Date;
+import java.util.List;
 
 import com.ideas2it.employee.model.Employee;
 import com.ideas2it.employee.service.implementation.EmployeeServiceImpl;
 
 /**
  * This class is used for control the flow of data to service.
- * @version 27/2/21
+ * @version 01/3/21
  * @author  Sathishkumar M
  */
 public class EmployeeController {   
@@ -116,5 +117,12 @@ public class EmployeeController {
      */
     public Employee retrieveEmployee(Integer employeeId) {
        return  employeeService.retrieveEmployee(employeeId);
+    }
+
+    /**
+     * This method is used to get all Employee Records in Database
+     */
+    public List<Employee> getAllRecords() {
+        return employeeService.getAllRecords();
     }
 }

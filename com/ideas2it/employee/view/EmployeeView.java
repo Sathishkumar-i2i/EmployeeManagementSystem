@@ -4,8 +4,9 @@
  */
 package com.ideas2it.employee.view;
 
-import java.text.ParseException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.ideas2it.employee.controller.EmployeeController;
@@ -14,7 +15,7 @@ import com.ideas2it.employee.model.Employee;
 /**
  * This class is used for getting input from user
  * Like create, delete, update and display
- * @version 27/2/21
+ * @version 01/3/21
  * @author  Sathishkumar M
  */
 public class EmployeeView {
@@ -25,12 +26,13 @@ public class EmployeeView {
      * This method is used for select purpose 
      * we can choose create, delete, update and display.
      */
-    public void userSelection() throws ParseException {
+    public void userSelection() {
         int userChoice = 1;
         String options = "\n\n Give input as Like \n 1 For Create" 
                          + "\n 2 For Update \n 3 For Delete" 
-                         + "\n 4 For Display \n 5 For Complete"; 
-        while(5 != userChoice) {
+                         + "\n 4 For Display \n 5 For All Employee Details"
+                         + "\n 6 For Completed"; 
+        while(6 != userChoice) {
             System.out.println(options);
             userChoice = scanner.nextInt();
             switch(userChoice) {
@@ -51,6 +53,10 @@ public class EmployeeView {
                     displayEmployeeDetail();
                     break;
                 case 5:
+                    System.out.println("Display All Employee Details");
+                    getAllRecords();
+                    break;
+                case 6:
                     System.out.println("Completed");
                     break;
                 default:
@@ -63,15 +69,15 @@ public class EmployeeView {
     /**
      * This method is used to get input from user for Create Employee Details
      */
-    public void createEmployee() throws ParseException {
+    public void createEmployee() {
         System.out.println("Enter employee Name");
         scanner.nextLine();
         String name = scanner.nextLine();
         System.out.println("Enter employee Dob" 
-                           + "\nExample(DD/MM/YYYY)");
+                           + "\nExample(YYYY-MM-DD)");
         Date dob = Date.valueOf(scanner.nextLine());
         System.out.println("Enter employee JoinYear"
-                           + "\nExample(DD/MM/YYYY)");
+                           + "\nExample(YYYY-MM-DD)");
         Date joinYear = Date.valueOf(scanner.nextLine());
         System.out.println("Enter employee Salary");
         long salary = scanner.nextLong();
@@ -88,7 +94,7 @@ public class EmployeeView {
     /**
      * This method is used to get input from user for Update Employee Details
      */
-    public void updateEmployee() throws ParseException {
+    public void updateEmployee() {
         String options = "\n\n Give input as Like \n 1 For Name update" 
                          + "\n 2 For Date of Birth update \n 3 For JoinYear update" 
                          + "\n 4 For Salary update \n 5 For PhoneNumber update"
@@ -108,13 +114,13 @@ public class EmployeeView {
                     break;
                 case 2:
                     System.out.println("Enter the Dob: " 
-                            + "\nExample(DD/MM/YYYY)");
+                            + "\nExample(YYYY-MM-DD)");
                     Date dob = Date.valueOf(scanner.nextLine());
                     employeeController.updateDob(dob, employeeId);
                     break;
                 case 3:
                     System.out.println("\nEnter the JoinYear: "
-                            + "\nExample(DD/MM/YYYY)");
+                            + "\nExample(YYYY-MM-DD)");
                     Date joinYear = Date.valueOf(scanner.nextLine());
                     employeeController.updateJoinYear(joinYear, employeeId);
                     break;
@@ -166,7 +172,21 @@ public class EmployeeView {
             System.out.println("Not Valid EmployeeId");
         }
     }
-    
+  
+    /**
+     * This method is used to get all Employee Records in Database
+     */  
+    public void getAllRecords() {
+        List<Employee> employeeAllDetails = employeeController.getAllRecords();
+        for (Employee employee : employeeAllDetails) {
+            System.out.println("Employee Name: " + employee.getName()
+                + "\nEmployee Dob: " + employee.getDob()
+                + "\nEmployee joinYear: " + employee.getJoinYear()
+                + "\nEmployee Salary: " + employee.getSalary()
+                + "\nEmployee PhoneNumber: " + employee.getPhoneNumber());
+        }
+    }
+
     /**
      * This method is used to get Employee Id from user
      */
