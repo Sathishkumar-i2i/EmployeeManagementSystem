@@ -42,7 +42,7 @@ public interface EmployeeDao {
      *        Name is used for update employee name
      * @return true or false
      */
-    public boolean updateName(String name, Integer employeeId);
+    public boolean updateName(Employee employee, Integer employeeId);
 
     /**
      * This method is use for sending updateDob in database
@@ -52,7 +52,7 @@ public interface EmployeeDao {
      *        dob is used for update employee dob
      * @return true or false
      */
-    public boolean updateDob(Date dob, Integer employeeId);
+    public boolean updateDob(Employee employee, Integer employeeId);
 
     /**
      * This method is use for sending updatejoinYear in database
@@ -62,7 +62,7 @@ public interface EmployeeDao {
      *        joinYear is used for update employee joinYear
      * @return true or false
      */
-    public boolean updateJoinYear(Date joinYear, Integer employeeId);
+    public boolean updateJoinYear(Employee employee, Integer employeeId);
 
     /**
      * This method is use for sending updateSalary in database
@@ -72,7 +72,7 @@ public interface EmployeeDao {
      *        salary is used for update employee salary
      * @return true or false
      */
-    public boolean updateSalary(long salary, Integer employeeId);    
+    public boolean updateSalary(Employee employee, Integer employeeId);    
 
     /**
      * This method is use for sending updatePhoneNumber in database
@@ -82,7 +82,7 @@ public interface EmployeeDao {
      *        phoneNumber is used for update employee phoneNumber
      * @return true or false
      */
-    public boolean updatePhoneNumber(long phoneNumber, Integer employeeId);
+    public boolean updatePhoneNumber(Employee employee, Integer employeeId);
 
     /**
      * This method is use for sending DeleteEmployee in database

@@ -83,9 +83,11 @@ public class EmployeeView {
         long salary = scanner.nextLong();
         System.out.println("Enter employee PhoneNumer");
         long phoneNumber = scanner.nextLong();
-        if (1 == employeeController.createEmployee(name, dob, joinYear,
-                salary, phoneNumber)) {
-            System.out.println("New Employee Created Successfully");
+        int employeeId = employeeController.createEmployee(name, dob, joinYear,
+                salary, phoneNumber);
+        if(0 != employeeId) {
+            System.out.println("New Employee Created Successfully"
+                + "\nEmployee Id = " + employeeId);
         } else {
             System.out.println("Not New Employee Created Successfully");
         }    
@@ -163,7 +165,8 @@ public class EmployeeView {
         Employee employeeDetail = employeeController.
                 retrieveEmployee(getEmployeeId());
         if (null != employeeDetail) {
-            System.out.println("Employee Name: " + employeeDetail.getName()
+            System.out.println("Employee Id: " + employeeDetail.getId()
+            + "\nEmployee Name: " + employeeDetail.getName()
             + "\nEmployee Dob: " + employeeDetail.getDob()
             + "\nEmployee joinYear: " + employeeDetail.getJoinYear()
             + "\nEmployee Salary: " + employeeDetail.getSalary()
@@ -179,11 +182,12 @@ public class EmployeeView {
     public void getAllRecords() {
         List<Employee> employeeAllDetails = employeeController.getAllRecords();
         for (Employee employee : employeeAllDetails) {
-            System.out.println("Employee Name: " + employee.getName()
+            System.out.println("Employee Id: " + employee.getId()
+                + "\nEmployee Name: " + employee.getName()
                 + "\nEmployee Dob: " + employee.getDob()
                 + "\nEmployee joinYear: " + employee.getJoinYear()
                 + "\nEmployee Salary: " + employee.getSalary()
-                + "\nEmployee PhoneNumber: " + employee.getPhoneNumber());
+                + "\nEmployee PhoneNumber: " + employee.getPhoneNumber() + "\n");
         }
     }
 

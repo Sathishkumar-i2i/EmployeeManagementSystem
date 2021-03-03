@@ -8,19 +8,16 @@ import java.sql.Date;
  * @author  Sathishkumar M
  */
 public class Employee {
+    private int id;
     private String name;
     private Date dob;
     private Date joinYear;
     private long salary;
     private long phoneNumber;
    
-  /*public Employee(String name, Date dob, Date joinYear, long salary, long phoneNumber) {
-        this.name = name;
-        this.dob = dob;
-        this.joinYear = joinYear;
-        this.salary = salary;
-        this.phoneNumber = phoneNumber;
-    }*/
+    public int getId() {
+        return id;        
+    }
 
     public String getName() {
         return name;
@@ -40,6 +37,10 @@ public class Employee {
 
     public long getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public void setId(int id) {
+        this.id = id;        
     }
     
     public void setName(String name) {

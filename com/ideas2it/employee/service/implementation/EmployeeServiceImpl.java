@@ -18,6 +18,7 @@ import com.ideas2it.employee.dao.EmployeeDao;
  */
 public class EmployeeServiceImpl implements EmployeeService {
     EmployeeDao employeeDao = new EmployeeDaoImpl();
+    Employee employee = new Employee();
 
     public int createEmployee(String name, Date dob, Date joinYear, 
         long salary, long phoneNumber) {
@@ -26,23 +27,33 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
    
     public boolean updateName(String name, Integer employeeId) {
-        return employeeDao.updateName(name, employeeId);
+        employee = employeeDao.retrieveEmployee(employeeId);
+        employee.setName(name);
+        return employeeDao.updateName(employee, employeeId);
     }
 
     public boolean updateDob(Date dob, Integer employeeId) {
-        return employeeDao.updateDob(dob, employeeId);
+        employee = employeeDao.retrieveEmployee(employeeId);
+        employee.setDob(dob);
+        return employeeDao.updateDob(employee, employeeId);
     }
 
     public boolean updateJoinYear(Date joinYear, Integer employeeId) {
-        return employeeDao.updateJoinYear(joinYear, employeeId);
+        employee = employeeDao.retrieveEmployee(employeeId);
+        employee.setJoinYear(joinYear);
+        return employeeDao.updateJoinYear(employee, employeeId);
     }
 
     public boolean updateSalary(long salary, Integer employeeId) {
-        return employeeDao.updateSalary(salary, employeeId);
+        employee = employeeDao.retrieveEmployee(employeeId);
+        employee.setSalary(salary);
+        return employeeDao.updateSalary(employee, employeeId);
     }
 
     public boolean updatePhoneNumber(long phoneNumber, Integer employeeId) {
-        return employeeDao.updatePhoneNumber(phoneNumber, employeeId);
+        employee = employeeDao.retrieveEmployee(employeeId);
+        employee.setPhoneNumber(phoneNumber);
+        return employeeDao.updatePhoneNumber(employee, employeeId);
     }
 
     public boolean deleteEmployee(Integer employeeId) {

@@ -9,6 +9,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
@@ -46,27 +47,36 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try {  
             Connection connection = this.getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "insert into employeedetails (id, name, dob, joinYear, salary, phoneNumber) "
-                 + "values(?, ?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, null);
-            preparedStatement.setString(2, name);  
-            preparedStatement.setDate(3, dob);  
-            preparedStatement.setDate(4, joinYear);  
-            preparedStatement.setLong(5, salary);  
-            preparedStatement.setLong(6, phoneNumber);  
-            preparedStatement.executeUpdate(); 
+                "insert into employeedetails (name, dob, joinYear, salary, phoneNumber) "
+                 + "values(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, name);  
+            preparedStatement.setDate(2, dob);  
+            preparedStatement.setDate(3, joinYear);  
+            preparedStatement.setLong(4, salary);  
+            preparedStatement.setLong(5, phoneNumber);  
+            if (0 != preparedStatement.executeUpdate()) {    
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                    if (resultSet.next()) {
+                        return resultSet.getInt(1);
+                    } 
+	        } 
         } catch(Exception e) {
             System.out.println(e);
         }
-        return 1;  
+        return 0;  
     }
 
-   public boolean updateName(String name, Integer employeeId) {
+   public boolean updateName(Employee employee, Integer employeeId) {
         try {  
             Connection connection = this.getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "update employeedetails set name = ? where id = " + employeeId);  
-            preparedStatement.setString(2, name);    
+                "update employeedetails set name = ?, dob = ?, joinYear = ?, salary = ?, phoneNumber = ? where id = ?");  
+            preparedStatement.setString(1, employee.getName());  
+            preparedStatement.setDate(2, employee.getDob());  
+            preparedStatement.setDate(3, employee.getJoinYear());  
+            preparedStatement.setLong(4, employee.getSalary());  
+            preparedStatement.setLong(5, employee.getPhoneNumber());
+            preparedStatement.setInt(6, employeeId);    
             preparedStatement.executeUpdate();
         } catch(Exception e) {
             System.out.println(e);
@@ -74,12 +84,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return true; 
     }
 
-    public boolean updateDob(Date dob, Integer employeeId) {
+    public boolean updateDob(Employee employee, Integer employeeId) {
         try {  
             Connection connection = this.getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "update employeedetails set dob = ? where id = " + employeeId);  
-            preparedStatement.setDate(3, dob);    
+                "update employeedetails set name = ?, dob = ?, joinYear = ?, salary = ?, phoneNumber = ? where id = ?");  
+            preparedStatement.setString(1, employee.getName());  
+            preparedStatement.setDate(2, employee.getDob());  
+            preparedStatement.setDate(3, employee.getJoinYear());  
+            preparedStatement.setLong(4, employee.getSalary());  
+            preparedStatement.setLong(5, employee.getPhoneNumber());
+            preparedStatement.setInt(6, employeeId);     
             preparedStatement.executeUpdate(); 
         } catch(Exception e) {
             System.out.println(e);
@@ -87,12 +102,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return true;
     }
 
-    public boolean updateJoinYear(Date joinYear, Integer employeeId) {
+    public boolean updateJoinYear(Employee employee, Integer employeeId) {
         try {  
             Connection connection = this.getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "update employeedetails set join = ? where id = " + employeeId);  
-            preparedStatement.setDate(4, joinYear);    
+                "update employeedetails set name = ?, dob = ?, joinYear = ?, salary = ?, phoneNumber = ? where id = ?");  
+            preparedStatement.setString(1, employee.getName());  
+            preparedStatement.setDate(2, employee.getDob());  
+            preparedStatement.setDate(3, employee.getJoinYear());  
+            preparedStatement.setLong(4, employee.getSalary());  
+            preparedStatement.setLong(5, employee.getPhoneNumber());
+            preparedStatement.setInt(6, employeeId);     
             preparedStatement.executeUpdate(); 
         } catch(Exception e) {
             System.out.println(e);
@@ -100,12 +120,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return true;  
     }
   
-    public boolean updateSalary(long salary, Integer employeeId) {
+    public boolean updateSalary(Employee employee, Integer employeeId) {
         try {  
             Connection connection = this.getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "update employeedetails set salary = ? where id = " + employeeId);  
-            preparedStatement.setLong(5, salary);    
+                "update employeedetails set name = ?, dob = ?, joinYear = ?, salary = ?, phoneNumber = ? where id = ?");  
+            preparedStatement.setString(1, employee.getName());  
+            preparedStatement.setDate(2, employee.getDob());  
+            preparedStatement.setDate(3, employee.getJoinYear());  
+            preparedStatement.setLong(4, employee.getSalary());  
+            preparedStatement.setLong(5, employee.getPhoneNumber());
+            preparedStatement.setInt(6, employeeId);     
             preparedStatement.executeUpdate(); 
         } catch(Exception e) {
             System.out.println(e);
@@ -113,12 +138,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return true; 
     }
      
-    public boolean updatePhoneNumber(long phoneNumber, Integer employeeId) {
+    public boolean updatePhoneNumber(Employee employee, Integer employeeId) {
         try{  
             Connection connection = this.getConnection();  
             PreparedStatement preparedStatement = connection.prepareStatement(  
-                "update employeedetails set phoneNumber = ? where id = " + employeeId);  
-            preparedStatement.setLong(6, phoneNumber);    
+                "update employeedetails set name = ?, dob = ?, joinYear = ?, salary = ?, phoneNumber = ? where id = ?");  
+            preparedStatement.setString(1, employee.getName());  
+            preparedStatement.setDate(2, employee.getDob());  
+            preparedStatement.setDate(3, employee.getJoinYear());  
+            preparedStatement.setLong(4, employee.getSalary());  
+            preparedStatement.setLong(5, employee.getPhoneNumber());
+            preparedStatement.setInt(6, employeeId);    
             preparedStatement.executeUpdate(); 
         } catch(Exception e) {
             System.out.println(e);
@@ -147,7 +177,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 ("select * FROM employeedetails where id = " + employeeId);    
             ResultSet resultSet = preparedStatement.executeQuery();  
             if(resultSet.next()) {  
-                employee = new Employee();    
+                employee = new Employee();
+                employee.setId(resultSet.getInt("id"));    
                 employee.setName(resultSet.getString("name"));  
                 employee.setDob(resultSet.getDate("dob"));  
                 employee.setJoinYear(resultSet.getDate("joinYear"));  
@@ -169,7 +200,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ("select * from employeedetails");  
         ResultSet resultSet = preparedStatement.executeQuery();  
         while(resultSet.next()){  
-            employee = new Employee();    
+            employee = new Employee();
+            employee.setId(resultSet.getInt("id"));   
             employee.setName(resultSet.getString("name"));  
             employee.setDob(resultSet.getDate("dob"));  
             employee.setJoinYear(resultSet.getDate("joinYear"));  
