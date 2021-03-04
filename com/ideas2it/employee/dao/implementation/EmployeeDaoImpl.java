@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-import com.ideas2it.employee.dao.EmployeeDao; 
+import com.ideas2it.employee.dao.EmployeeDao;
+import com.ideas2it.employee.model.Address; 
 import com.ideas2it.employee.model.Employee;
 
 /**
@@ -64,6 +65,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
             System.out.println(e);
         }
         return 0;  
+    }
+
+    public boolean createAddress(int employeeId, String doorNo, String streetName, 
+        String localArea, String district, String state, int pinCode) { 
+        try {  
+            Connection connection = this.getConnection();  
+            PreparedStatement preparedStatement = connection.prepareStatement(  
+                "insert into addressdetails (employeeId, doorNo, streetName," 
+                 + "localArea, district, state, pinCode) values(?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1, employeeId);  
+            preparedStatement.setString(2, doorNo);  
+            preparedStatement.setString(3, streetName);  
+            preparedStatement.setString(4, localArea);  
+            preparedStatement.setString(5, district);
+            preparedStatement.setString(6, state);
+            preparedStatement.setInt(7, pinCode);
+            preparedStatement.executeUpdate();  
+            return true; 
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return false;  
     }
 
    public boolean updateName(Employee employee, Integer employeeId) {
@@ -162,11 +185,26 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(  
                 "delete from employeedetails where id = ?");  
             preparedStatement.setInt(1, employeeId);    
-            preparedStatement.executeUpdate();  
+            preparedStatement.executeUpdate(); 
+            return true; 
         } catch(Exception e) {
             System.out.println(e);
         }
-        return true;
+        return false;
+    }
+
+    public boolean deleteAddress(Integer employeeId) {
+        try {  
+            Connection connection = this.getConnection();  
+            PreparedStatement preparedStatement = connection.prepareStatement(  
+                "delete from addressdetails where employeeId = ?");  
+            preparedStatement.setInt(1, employeeId);    
+            preparedStatement.executeUpdate();
+            return true;  
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     public Employee retrieveEmployee(Integer employeeId) {
@@ -189,6 +227,30 @@ public class EmployeeDaoImpl implements EmployeeDao {
             System.out.println(e);
         }
         return employee;    
+    }
+  
+
+ public Address retrieveAddress(Integer employeeId) {
+        Address address = null;  
+        try {  
+            Connection connection = this.getConnection();  
+            PreparedStatement preparedStatement = connection.prepareStatement
+                ("select * FROM addressdetails where employeeId = " + employeeId);    
+            ResultSet resultSet = preparedStatement.executeQuery();  
+            if(resultSet.next()) {  
+                address = new Address();
+                address.setId(resultSet.getInt("employeeId"));    
+                address.setDoorNo(resultSet.getString("doorNo"));  
+                address.setStreetName(resultSet.getString("streetName"));  
+                address.setLocalArea(resultSet.getString("localArea"));  
+                address.setDistrict(resultSet.getString("district"));  
+                address.setState(resultSet.getString("state")); 
+                address.setPinCode(resultSet.getInt("pinCode")); 
+            }  
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return address;    
     }
 
     public List<Employee> getAllRecords() {  

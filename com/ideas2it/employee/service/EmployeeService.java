@@ -6,6 +6,7 @@ package com.ideas2it.employee.service;
 import java.sql.Date;
 import java.util.List;
 
+import com.ideas2it.employee.model.Address;
 import com.ideas2it.employee.model.Employee;
 
 /**
@@ -31,6 +32,9 @@ public interface EmployeeService {
      */
     public int createEmployee(String name, Date dob, Date joinYear, 
         long salary, long phoneNumber);
+
+    public boolean createAddress(int employeeId, String doorNo, String streetName, 
+        String localArea, String district, String state, int pinCode);
  
     /**
      * This method is use for sending updateName to Employee
@@ -91,7 +95,7 @@ public interface EmployeeService {
      * @return true or false
      */
     public boolean deleteEmployee(Integer employeeId);
-
+    public boolean deleteAddress(Integer employeeId);
     /**
      * This Method is used for display Employee Details
      * based on EmployeeId
@@ -101,6 +105,8 @@ public interface EmployeeService {
      *         Employee get Employee Details 
      */
     public Employee retrieveEmployee(Integer employeeId);
+   
+    public Address retrieveAddress(Integer employeeId);
     
     /**
      * This Method is used for display All Employee Details

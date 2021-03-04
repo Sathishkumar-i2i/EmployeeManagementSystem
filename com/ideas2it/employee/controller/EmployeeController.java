@@ -6,6 +6,7 @@ package com.ideas2it.employee.controller;
 import java.sql.Date;
 import java.util.List;
 
+import com.ideas2it.employee.model.Address;
 import com.ideas2it.employee.model.Employee;
 import com.ideas2it.employee.service.implementation.EmployeeServiceImpl;
 
@@ -34,6 +35,12 @@ public class EmployeeController {
     public int createEmployee(String name, Date dob, Date joinYear, 
         long salary, long phoneNumber) {
         return employeeService.createEmployee(name, dob, joinYear, salary, phoneNumber);
+    }
+
+    public boolean createAddress(int employeeId, String doorNo, String streetName, 
+        String localArea, String district, String state, int pinCode) { 
+        return employeeService.createAddress(employeeId, doorNo, streetName, 
+            localArea, district, state, pinCode); 
     }
     
     /**
@@ -106,8 +113,10 @@ public class EmployeeController {
     public boolean deleteEmployee(Integer employeeId) {
         return employeeService.deleteEmployee(employeeId);
     }
-  
-
+   
+    public boolean deleteAddress(Integer employeeId) {
+        return employeeService.deleteAddress(employeeId);
+    }
     /**
      * This method is use for sending displayEmployee to sevice
      * @param employeeId
@@ -117,6 +126,10 @@ public class EmployeeController {
      */
     public Employee retrieveEmployee(Integer employeeId) {
        return  employeeService.retrieveEmployee(employeeId);
+    }
+
+    public Address retrieveAddress(Integer employeeId) {
+       return  employeeService.retrieveAddress(employeeId);
     }
 
     /**

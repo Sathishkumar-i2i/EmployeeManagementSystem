@@ -10,12 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.ideas2it.employee.controller.EmployeeController;
+import com.ideas2it.employee.model.Address;
 import com.ideas2it.employee.model.Employee; 
 
 /**
  * This class is used for getting input from user
  * Like create, delete, update and display
- * @version 01/3/21
+ * @version 04/3/21
  * @author  Sathishkumar M
  */
 public class EmployeeView {
@@ -85,12 +86,30 @@ public class EmployeeView {
         long phoneNumber = scanner.nextLong();
         int employeeId = employeeController.createEmployee(name, dob, joinYear,
                 salary, phoneNumber);
+        System.out.println("Enter employee DoorNo");
+        String doorNo = scanner.nextLine();
+        System.out.println("Enter employee StreetName");
+        String  streetName= scanner.nextLine();
+        System.out.println("Enter employee LocalArea");
+        String localArea = scanner.nextLine();
+        System.out.println("Enter employee District");
+        String district = scanner.nextLine();
+        System.out.println("Enter employee State");
+        String state = scanner.nextLine();
+        System.out.println("Enter employee PinCode");
+        int pinCode = scanner.nextInt();
         if(0 != employeeId) {
             System.out.println("New Employee Created Successfully"
                 + "\nEmployee Id = " + employeeId);
         } else {
             System.out.println("Not New Employee Created Successfully");
-        }    
+        }
+        if(employeeController.createAddress(employeeId, doorNo, streetName, 
+            localArea, district, state, pinCode)) {
+            System.out.println("Address Created Successfully");
+        } else {
+            System.out.println("Not Address Created Successfully");
+        }   
     }
 
     /**
@@ -151,7 +170,9 @@ public class EmployeeView {
      * This method is used to get input from user for Delete Employee Details
      */  
     public void deleteEmployee() {
-        if (employeeController.deleteEmployee(getEmployeeId())) {
+        Integer employeeId = getEmployeeId();
+        if (employeeController.deleteEmployee(employeeId) &&
+            employeeController.deleteAddress(employeeId)) {
             System.out.print("Delete Successfully");
         } else {
             System.out.print("Deletion failed");
@@ -162,15 +183,24 @@ public class EmployeeView {
      * This method is used to get input from user for Display Employee Details
      */
     public void displayEmployeeDetail() {
+        Integer employeeId = getEmployeeId();
         Employee employeeDetail = employeeController.
-                retrieveEmployee(getEmployeeId());
-        if (null != employeeDetail) {
+                retrieveEmployee(employeeId);
+        Address addressDetail = employeeController.
+                retrieveAddress(employeeId);
+        if ((null != employeeDetail) && (null != addressDetail)) {
             System.out.println("Employee Id: " + employeeDetail.getId()
             + "\nEmployee Name: " + employeeDetail.getName()
             + "\nEmployee Dob: " + employeeDetail.getDob()
             + "\nEmployee joinYear: " + employeeDetail.getJoinYear()
             + "\nEmployee Salary: " + employeeDetail.getSalary()
-            + "\nEmployee PhoneNumber: " + employeeDetail.getPhoneNumber());
+            + "\nEmployee PhoneNumber: " + employeeDetail.getPhoneNumber()
+            + "\nEmployee DoorNo: " + addressDetail.getDoorNo()
+            + "\nEmployee Street Name: " + addressDetail.getStreetName()
+            + "\nEmployee Local Area: " + addressDetail.getLocalArea()
+            + "\nEmployee District: " + addressDetail.getDistrict()
+            + "\nEmployee State: " + addressDetail.getState()
+            + "\nEmployee PinCode: " + addressDetail.getPinCode());
         } else {
             System.out.println("Not Valid EmployeeId");
         }

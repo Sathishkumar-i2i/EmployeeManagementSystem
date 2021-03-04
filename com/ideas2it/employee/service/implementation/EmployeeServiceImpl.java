@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.util.List; 
 
 import com.ideas2it.employee.model.Employee;
+import com.ideas2it.employee.model.Address;
 import com.ideas2it.employee.service.EmployeeService;
 import com.ideas2it.employee.dao.implementation.EmployeeDaoImpl;
 import com.ideas2it.employee.dao.EmployeeDao;
@@ -24,6 +25,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         long salary, long phoneNumber) {
         return employeeDao.createEmployee(name, dob,
                 joinYear, salary, phoneNumber);
+    }
+
+    public boolean createAddress(int employeeId, String doorNo, String streetName, 
+        String localArea, String district, String state, int pinCode) { 
+        return employeeDao.createAddress(employeeId, doorNo, streetName, 
+            localArea, district, state, pinCode);
     }
    
     public boolean updateName(String name, Integer employeeId) {
@@ -58,10 +65,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public boolean deleteEmployee(Integer employeeId) {
         return employeeDao.deleteEmployee(employeeId);
+    }
+
+    public boolean deleteAddress(Integer employeeId) {
+        return employeeDao.deleteAddress(employeeId);
     }    
     
     public Employee retrieveEmployee(Integer employeeId) {
         return employeeDao.retrieveEmployee(employeeId);
+    }
+
+    public Address retrieveAddress(Integer employeeId) {
+        return employeeDao.retrieveAddress(employeeId);
     }
    
     public List<Employee> getAllRecords() {
